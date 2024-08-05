@@ -1,0 +1,31 @@
+{
+  "name": "job_board",
+  "version": "1.0.0",
+  "description": "Job Board for the wanted-pre-onboarding-backend",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": " ",
+    "start": "nodemon app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hesshess/wanted-pre-onboarding-backend.git"
+  },
+  "keywords": [],
+  "author": "Hess Wang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hesshess/wanted-pre-onboarding-backend/issues"
+  },
+  "homepage": "https://github.com/hesshess/wanted-pre-onboarding-backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
