@@ -1,5 +1,24 @@
 import express from 'express';
+import * as jobController from '../controller/job.js'
 
- const router = express.Router();
+const router = express.Router();
+
+// GET   /jobs
+// GET   /jobs?search=:term
+router.get('/', jobController.getJobs);
+
+// GET   /jobs/:id
+router.get('/:id', jobController.getJob);
+
+// POST  /jobs
+router.post('/', jobController.createJob);
+
+// PUT   /job/:id
+router.put('/:id', jobController.updateJob);
+
+// DEL   /job/:id 
+router.delete('/:id', jobController.deleteJob);
+
+
 
 export default router;
