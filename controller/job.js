@@ -1,16 +1,27 @@
-import * as jobRepository from '../data/job.js';
+import * as jobRepository from '../model/job.js';
+
+export async function createJob(req, res, next) {
+  const body = req.body;
+  const Job = await jobRepository.create(body);
+  res.status(201).json(Job);
+}
+
+
 
 export async function getJobs(req, res) {
   const search = req.query.search;
   const data = await (search
-    ? jobRepository.getAllByUsername(search)
+    ? jobRepository.getAllBySearch(search)
     : jobRepository.getAll());
   res.status(200).json(data);
 }
 
 export async function getJob(req, res, next) {
   const id = req.params.id;
-  const Job = await jobRepository.getById(id);
+  let Job = await jobRepository.getById(id);
+  const otherJobs = await jobRepository.getByCompany(Job.companyId, Job.id);
+  const otherJob_arr = otherJobs.map((obj)=>obj.id);
+  Job.otherJobs = otherJob_arr;
   if (Job) {
     res.status(200).json(Job);
   } else {
@@ -18,16 +29,14 @@ export async function getJob(req, res, next) {
   }
 }
 
-export async function createJob(req, res, next) {
-  const { companyId, position, reward, position_detail, skills } = req.body;
-  const Job = await jobRepository.create(companyId, position, reward, position_detail, skills );
-  res.status(201).json(Job);
-}
 
 export async function updateJob(req, res, next) {
+
   const id = req.params.id;
-  const { position, reward, position_detail, skills } = req.body;
-  const Job = await jobRepository.update(position, reward, position_detail, skills);
+  const body = req.body;
+  const {position, reward, content, skills} = body
+
+  const Job = await jobRepository.update(id, body);
   if (Job) {
     res.status(200).json(Job);
   } else {
@@ -40,3 +49,12 @@ export async function deleteJob(req, res, next) {
   await jobRepository.remove(id);
   res.sendStatus(204);
 }
+
+
+
+// export async function applyJob (req, res, next){
+//   const jobId = req.params.id;
+//   const {userId} = req.body;
+//   const apply = await jobRepository.checkApply(jobId, userId);
+//   res.status(201).json(apply);
+// }

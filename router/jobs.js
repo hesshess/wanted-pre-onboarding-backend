@@ -20,5 +20,8 @@ router.put('/:id', jobController.updateJob);
 router.delete('/:id', jobController.deleteJob);
 
 
+//추가구현 채용공고에 지원
+// router.post('/:id/apply', jobController.applyJob)
+
 
 export default router;

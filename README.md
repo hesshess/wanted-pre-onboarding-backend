@@ -1,27 +1,33 @@
-# API Spec - Job Board
-### [노션 버젼](https://www.notion.so/hessybessy/API-Spec-Job-Board-4f3af9fb0bf34a57b14b45aed39af2b5)
+### [🔗노션 버젼🔗](https://www.notion.so/hessybessy/API-Spec-Job-Board-4f3af9fb0bf34a57b14b45aed39af2b5)
+# Job Board - 왕혜수👩🏻‍💻
 
-# Jobs // 채용공고
+### 깃허브 리파지토리
 
-- `Job` Schema
+[https://github.com/hesshess/wanted-pre-onboarding-backend](https://github.com/hesshess/wanted-pre-onboarding-backend)
+
+- 언어 및 프레임워크 :  **Javascript & Node.js**
+- ORM : Prisma
+- RDBMS : PostgreSQL
+
+# 🎮API 스펙
+
+## Company // 채용기업
+
+- `Company` Schema
     
     ```
     {
-      id: int,  // 채용공고 아이디
-      company_id: int // 회사 아이디
-      position: string,  // 채용 포지션
-      reward: int,  // 채용 보상금
-      position_detail: text // 채용내용
-      skills: string // 사용기술(프로그래밍 언어)
-      created_at: Datetime, // 잡 생성 날짜
-      updated_at: Datetime // 수정날짜
+    	id: int // 회사 아이디
+    	name: string // 회사 이름
+    	country: string // 근무나라
+      city: string // 근무도시
     }
     ```
     
 
-# Users // 사용자
+## User // 사용자
 
-- user Schema
+- `User` Schema
     
     ```
     {
@@ -34,19 +40,38 @@
     ```
     
 
-# Companies // 채용기업
+## Job // 채용공고
 
-- company Schema
+- `Job` Schema
     
     ```
     {
-    	id: int // 회사 아이디
-    	name: string // 회사 이름
-    	country: string // 근무나라
-      city: string // 근무도시
+      id: int,  // 채용공고 아이디
+      companyId: int // 회사 아이디
+      position: string,  // 채용 포지션
+      reward: int,  // 채용 보상금
+      position_detail: text // 채용내용
+      skills: string // 사용기술(프로그래밍 언어)
+      createdAt: Datetime, // 잡 생성 날짜
+      updatedAt: Datetime // 수정날짜
     }
     ```
     
+
+## Application // 지원현황
+
+- `Application` Schema
+    
+    ```
+    {
+      jobId: int,  // 채용공고 아이디
+      userId: int, // 사용자 아이디
+      createdAt: datetime, // 지원일
+    }
+    ```
+    
+
+# 🎛️ API
 
 ### `GET` /jobs
 
@@ -83,14 +108,14 @@
     ```
     {
        id: int,  // 채용공고 아이디
-       company_id: string // 회사아이디
+       companyId: int // 회사아이디
        position: string,  // 채용 포지션
        reward: int,  // 채용 보상금
-       position_detail: text // 채용내용
+       content: text // 채용내용
        skills: string // 사용기술
        country: string // 근무나라
        city: string // 근무도시
-       created_at: Datetime, // 잡 생성 날짜
+       createdAt: Datetime, // 잡 생성 날짜
        related_jobs:[채용공고_id, 채용공고_id, ..] // 회사가올린다른채용공고
     }
     ```
@@ -104,7 +129,7 @@
     
     ```
     {
-       company_id: string // 회사아이디
+       companyId: int // 회사아이디
     	 position: string,  // 채용 포지션
     	 reward: int,  // 채용 보상금
     	 position_detail: text // 채용내용
@@ -112,7 +137,7 @@
     }
     ```
     
-    Response `20`
+    Response `200`
     
     ```
     {
@@ -130,7 +155,7 @@
     ```
     {
     	 position: string,  // 채용 포지션(optinal)
-    	 reward: string,  // 채용 보상금(optinal)
+    	 reward: int,  // 채용 보상금(optinal)
     	 position_detail: text // 채용내용(optinal)
     	 skills: string // 사용기술(optinal)
        country: string // 근무나라(optinal)
@@ -151,16 +176,4 @@
 
 - deleting job //채용공고를 삭제합니다.
     
-    Response `204` 
-    
-
-# Apply // 지원
-
-- apply Schema
-    
-    ```
-    {
-      job_id: int,  // 채용공고 아이디
-      user_id: int, // 사용자 아이디
-    }
-    ```
+    Response `204`
